@@ -1,1 +1,800 @@
-welcome
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Career Guidance</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4CAF50;
+      --primary-dark: #3e8e41;
+      --secondary: #2196F3;
+      --accent: #FFC107;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --success: #28a745;
+      --info: #17a2b8;
+      --warning: #ffc107;
+      --danger: #dc3545;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+      color: var(--dark);
+      line-height: 1.7;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Animated Header */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
+      background-size: cover;
+      opacity: 0.1;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      font-weight: 700;
+      position: relative;
+      animation: fadeInDown 1s ease;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      opacity: 0.9;
+      animation: fadeInUp 1s ease 0.3s both;
+    }
+
+    /* Floating Particles */
+    .particle {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      animation: float 15s infinite linear;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+    }
+
+    /* Main Content */
+    main {
+      padding: 40px 0;
+    }
+
+    /* Animated Sections */
+    section {
+      margin: 30px 0;
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      border-left: 5px solid var(--primary);
+    }
+
+    section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+
+    section::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.05) 0%, rgba(76, 175, 80, 0.01) 100%);
+      z-index: 0;
+    }
+
+    section > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    section h2 {
+      color: var(--primary);
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+    }
+
+    section h2 i {
+      margin-right: 15px;
+      color: var(--primary);
+    }
+
+    /* Dynamic Buttons */
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.5);
+      opacity: 0;
+      border-radius: 100%;
+      transform: scale(1, 1) translate(-50%);
+      transform-origin: 50% 50%;
+    }
+
+    .btn:focus:not(:active)::after {
+      animation: ripple 1s ease-out;
+    }
+
+    @keyframes ripple {
+      0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(20, 20);
+        opacity: 0;
+      }
+    }
+
+    /* Alternate Button Styles */
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      box-shadow: none;
+    }
+
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: var(--dark);
+      box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+    }
+
+    .btn-accent:hover {
+      background: #e0a800;
+      box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4);
+    }
+
+    /* List Styles */
+    ul, ol {
+      padding-left: 30px;
+      margin-bottom: 20px;
+    }
+
+    ul li, ol li {
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    ul li::before {
+      content: '•';
+      color: var(--primary);
+      font-weight: bold;
+      display: inline-block;
+      width: 1em;
+      margin-left: -1em;
+    }
+
+    ol {
+      counter-reset: item;
+    }
+
+    ol li {
+      counter-increment: item;
+    }
+
+    ol li::before {
+      content: counter(item);
+      background: var(--primary);
+      color: white;
+      font-size: 0.8em;
+      font-weight: bold;
+      border-radius: 50%;
+      width: 1.5em;
+      height: 1.5em;
+      text-align: center;
+      display: inline-block;
+      margin-right: 0.5em;
+      margin-left: -2em;
+      line-height: 1.5em;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      padding: 30px 20px;
+      background: linear-gradient(135deg, var(--dark) 0%, #343a40 100%);
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    footer p {
+      opacity: 0.8;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.2rem;
+      }
+      
+      header p {
+        font-size: 1rem;
+      }
+      
+      section {
+        padding: 25px;
+      }
+      
+      section h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 40px 20px;
+      }
+      
+      header h1 {
+        font-size: 1.8rem;
+      }
+      
+      section {
+        padding: 20px;
+      }
+      
+      .btn {
+        padding: 10px 25px;
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Special Features */
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(76, 175, 80, 0.05) 100%);
+      border-left: 4px solid var(--primary);
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    .emoji-list li {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .emoji-list li::before {
+      content: attr(data-emoji);
+      margin-right: 10px;
+    }
+
+    /* Floating CTA Button */
+    .floating-cta {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--primary);
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.3s ease;
+      animation: pulse 2s infinite;
+    }
+
+    .floating-cta:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 25px rgba(76, 175, 80, 0.6);
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 15px rgba(76, 175, 80, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+      }
+    }
+
+    /* Testimonials */
+    .testimonial {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      margin: 20px 0;
+      position: relative;
+    }
+
+    .testimonial::before {
+      content: '"';
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      font-size: 60px;
+      color: rgba(76, 175, 80, 0.1);
+      font-family: serif;
+      line-height: 1;
+    }
+
+    .testimonial-content {
+      font-style: italic;
+      margin-bottom: 15px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-author {
+      font-weight: 600;
+      color: var(--primary);
+      text-align: right;
+    }
+
+    /* Grid Layout */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    /* Card Styles */
+    .card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    .card-img {
+      height: 180px;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 3rem;
+    }
+
+    .card-body {
+      padding: 25px;
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      width: 100%;
+      background: #e9ecef;
+      border-radius: 50px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+      border-radius: 50px;
+      width: 0;
+      transition: width 1s ease;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      margin-bottom: -1px;
+    }
+
+    .tab {
+      padding: 12px 25px;
+      background: #e9ecef;
+      border: none;
+      border-radius: 8px 8px 0 0;
+      margin-right: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tab.active {
+      background: white;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 25px;
+      background: white;
+      border-radius: 0 8px 8px 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Particles -->
+  <div id="particles"></div>
+
+  <header>
+    <div class="container">
+      <h1><i class="fas fa-graduation-cap"></i> Student Career Guidance</h1>
+      <p>Empowering TN Government School Students with Free Career Counseling</p>
+      <div class="cta-buttons" style="margin-top: 30px;">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSf00BaJoU7uuBXMht4O4bsEtD2W_sTzZJyllF1DHNXzqoGyiA/viewform?usp=header" class="btn btn-accent" style="margin-right: 15px;"><i class="fas fa-user-plus"></i> Register Now</a>
+        <a href="#opportunities" class="btn btn-outline"><i class="fas fa-search"></i> Explore Opportunities</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="about" class="animated-section">
+      <h2><i class="fas fa-info-circle"></i> About the Initiative</h2>
+      <p>We guide students from 10th, 12th, and even those who have failed in their board exams by showing them proper government opportunities and career paths in Arts & Science, Engineering, Medicine, Music, Direction, etc.</p>
+      
+      <div class="highlight-box">
+        <p><strong>Our Mission:</strong> To provide free, accessible career guidance to every government school student in Tamil Nadu, helping them discover their potential and find the right path for their future.</p>
+      </div>
+    </section>
+
+    <section id="opportunities">
+      <h2><i class="fas fa-briefcase"></i> Opportunities & Exams</h2>
+      <p>We provide comprehensive information about various career paths and examination opportunities:</p>
+      
+      <div class="grid">
+        <div class="card">
+          <div class="card-img">
+            <i class="fas fa-flask"></i>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Science Stream</h3>
+            <ul class="emoji-list">
+              <li data-emoji="🔬">NEET for Medical</li>
+              <li data-emoji="⚙️">JEE for Engineering</li>
+              <li data-emoji="🧪">Research Careers</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-img" style="background: var(--secondary);">
+            <i class="fas fa-paint-brush"></i>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Arts Stream</h3>
+            <ul class="emoji-list">
+              <li data-emoji="🎭">Performing Arts</li>
+              <li data-emoji="✍️">Literature & Languages</li>
+              <li data-emoji="🌍">Social Sciences</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-img" style="background: var(--accent); color: var(--dark);">
+            <i class="fas fa-music"></i>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Creative Fields</h3>
+            <ul class="emoji-list">
+              <li data-emoji="🎵">Music & Composition</li>
+              <li data-emoji="🎬">Film Direction</li>
+              <li data-emoji="🎨">Fine Arts</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="eligibility">
+      <h2><i class="fas fa-check-circle"></i> Eligibility</h2>
+      <div class="emoji-list">
+        <p><span data-emoji="📍">Students from Tamil Nadu</span></p>
+        <p><span data-emoji="✅">Priority to Government & Government Aided School Students</span></p>
+        <p><span data-emoji="📄">Required Documents: ID Card, Aadhar Card, 10th/12th Mark Sheet</span></p>
+      </div>
+      
+      <div class="progress-container">
+        <div class="progress-bar" style="width: 85%;"></div>
+      </div>
+      <p style="text-align: center; font-size: 0.9rem; color: var(--gray);">85% of our beneficiaries are from government schools</p>
+    </section>
+
+    <section id="register">
+      <h2><i class="fas fa-question-circle"></i> How it Works</h2>
+      <ol>
+        <li>Student registers on our website through a simple form</li>
+        <li>Our dedicated team verifies the profile within 48 hours</li>
+        <li>Confirmation message will be sent via SMS/Email</li>
+        <li>One-on-one guidance session scheduled with our career counselor</li>
+        <li>After course selection, student updates their status on our portal</li>
+        <li>Follow-up support for 6 months after initial guidance</li>
+      </ol>
+      
+      <div style="text-align: center; margin-top: 30px;">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSf00BaJoU7uuBXMht4O4bsEtD2W_sTzZJyllF1DHNXzqoGyiA/viewform?usp=header" class="btn" id="dynamic-btn"><i class="fas fa-user-plus"></i> Register Now - It's Free!</a>
+      </div>
+    </section>
+
+    <section id="testimonials">
+      <h2><i class="fas fa-quote-left"></i> Success Stories</h2>
+      
+      <div class="grid">
+        <div class="testimonial">
+          <div class="testimonial-content">
+            "After failing in 12th standard, I thought my life was over. The guidance I received here helped me discover my passion for photography. Today I'm working as a professional photographer for a leading newspaper."
+          </div>
+          <div class="testimonial-author">- Ramesh, Madurai</div>
+        </div>
+        
+        <div class="testimonial">
+          <div class="testimonial-content">
+            "Coming from a government school, I didn't know about engineering entrance exams. The counselors explained everything and helped me prepare. Now I'm studying at NIT Trichy!"
+          </div>
+          <div class="testimonial-author">- Priya, Coimbatore</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="trust">
+      <h2><i class="fas fa-lock"></i> Trust & Privacy</h2>
+      <p>This is a trust-based initiative run by volunteers who believe in giving back to society. Your data security is our priority:</p>
+      
+      <div class="tabs">
+        <button class="tab active" onclick="openTab(event, 'privacy')">Privacy Policy</button>
+        <button class="tab" onclick="openTab(event, 'data')">Data Usage</button>
+        <button class="tab" onclick="openTab(event, 'volunteer')">Volunteer With Us</button>
+      </div>
+      
+      <div id="privacy" class="tab-content active">
+        <p>We collect minimal information required for verification and guidance. All data is stored securely and never shared with third parties without consent.</p>
+      </div>
+      
+      <div id="data" class="tab-content">
+        <p>Your information is used solely for career counseling purposes. We maintain anonymized statistics to improve our services but never disclose individual details.</p>
+      </div>
+      
+      <div id="volunteer" class="tab-content">
+        <p>Join our team of volunteers! Whether you're a professional, student, or retired individual, your experience can help guide the next generation.</p>
+        <a href="#" class="btn" style="margin-top: 15px;"><i class="fas fa-hands-helping"></i> Volunteer Now</a>
+      </div>
+    </section>
+
+    <section id="future">
+      <h2><i class="fas fa-rocket"></i> Future Vision</h2>
+      <p class="highlight-box">"Vinoth na nerla soldren" – This is just the beginning. We aim to build a large guidance network for students across Tamil Nadu, with plans to expand to other states in the coming years.</p>
+      
+      <div style="text-align: center; margin-top: 30px;">
+        <a href="#" class="btn btn-outline"><i class="fas fa-hand-holding-heart"></i> Support Our Initiative</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Student Career Guidance | Built by Young Volunteers</p>
+      <div style="margin-top: 20px;">
+        <a href="#" style="color: white; margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-facebook"></i></a>
+        <a href="#" style="color: white; margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-twitter"></i></a>
+        <a href="#" style="color: white; margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+        <a href="#" style="color: white; margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating CTA Button -->
+  <div class="floating-cta" onclick="alert('Need help? Call us at +91 9876543210')">
+    <i class="fas fa-comment-alt"></i>
+  </div>
+
+  <script>
+    // Create floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 30;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random properties
+        const size = Math.random() * 10 + 5;
+        const posX = Math.random() * 100;
+        const delay = Math.random() * 15;
+        const duration = Math.random() * 10 + 10;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}%`;
+        particle.style.bottom = `-${size}px`;
+        particle.style.animationDelay = `${delay}s`;
+        particle.style.animationDuration = `${duration}s`;
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+    
+    // Dynamic button text
+    function animateButton() {
+      const texts = [
+        "Register Now - It's Free!",
+        "Get Career Guidance Today!",
+        "Start Your Journey Now!",
+        "Unlock Your Potential!"
+      ];
+      const btn = document.getElementById('dynamic-btn');
+      let counter = 0;
+      
+      setInterval(() => {
+        btn.innerHTML = `<i class="fas fa-user-plus"></i> ${texts[counter]}`;
+        counter = (counter + 1) % texts.length;
+      }, 3000);
+    }
+    
+    // Tab functionality
+    function openTab(evt, tabName) {
+      const tabContents = document.getElementsByClassName("tab-content");
+      for (let i = 0; i < tabContents.length; i++) {
+        tabContents[i].classList.remove("active");
+      }
+      
+      const tabs = document.getElementsByClassName("tab");
+      for (let i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove("active");
+      }
+      
+      document.getElementById(tabName).classList.add("active");
+      evt.currentTarget.classList.add("active");
+    }
+    
+    // Animate progress bar
+    function animateProgressBar() {
+      const progressBar = document.querySelector('.progress-bar');
+      progressBar.style.width = '0';
+      setTimeout(() => {
+        progressBar.style.width = '85%';
+      }, 500);
+    }
+    
+    // Initialize everything when page loads
+    window.onload = function() {
+      createParticles();
+      animateButton();
+      animateProgressBar();
+      
+      // Animate sections when they come into view
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animated');
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      document.querySelectorAll('section').forEach(section => {
+        observer.observe(section);
+      });
+    };
+  </script>
+</body>
+</html>
