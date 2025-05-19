@@ -530,6 +530,64 @@
     .tab-content.active {
       display: block;
     }
+
+/* Enhanced Logo Styles */
+.logo-container {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  z-index: 10;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.logo {
+  height: 80px; /* Increased from 60px */
+  width: auto;
+  transition: all 0.3s ease;
+}
+
+.logo-container:hover {
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+/* Adjust header padding to accommodate larger logo */
+header {
+  padding: 80px 20px 60px; /* Added more top padding */
+}
+
+@media (max-width: 768px) {
+  .logo {
+    height: 200px; /* Slightly smaller for tablet */
+  }
+  
+  header {
+    padding: 70px 20px 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    height: 60px; /* Smaller for mobile */
+  }
+  
+  .logo-container {
+    top: 10px;
+    left: 20px;
+    padding: 8px;
+  }
+  
+  header {
+    padding: 60px 15px 40px;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -537,8 +595,13 @@
   <div id="particles"></div>
 
   <header>
+
+    <div class="logo-container">
+    <img src="meipuratchi.png" alt="மெய் புரட்சி Logo" class='logo' height="250px" width="auto">
+  </div>
     <div class="container">
-      <h1><i class="fas fa-graduation-cap"></i> Student Career Guidance</h1>
+      <h1><i class="fas fa-graduation-cap"></i> மெய் புரட்சி<br></b></h1>
+      <h3>Student Career Guidance</h3>
       <p>Empowering TN Government School Students with Free Career Counseling</p>
       <div class="cta-buttons" style="margin-top: 30px;">
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSf00BaJoU7uuBXMht4O4bsEtD2W_sTzZJyllF1DHNXzqoGyiA/viewform?usp=header" class="btn btn-accent" style="margin-right: 15px;"><i class="fas fa-user-plus"></i> Register Now</a>
