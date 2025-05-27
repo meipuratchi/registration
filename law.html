@@ -300,7 +300,21 @@
             padding: 2rem;
             margin: 2rem 0;
             animation: fadeIn 1s ease;
+            min-height: 300px; /* Minimum height for mobile */
+            max-height: 600px;
+           overflow: auto;
+            position: relative;
         }
+
+
+/* For very small screens */
+@media (max-width: 480px) {
+    .chart-container {
+        min-height: 400px; /* Even taller for very small screens */
+    }
+}
+
+
         
         canvas {
             width: 100% !important;
@@ -631,7 +645,7 @@
                             <li>Application Dates: 12.05.2025 to 31.05.2025</li>
                             <li>Application Fees: Rs.500-1000 for SOEL, Rs.250-500 for Affiliated Colleges</li>
                         </ul>
-                        <a href="#" class="btn" style="margin-top: 15px;">Download PDF</a>
+                        <a href="Notification for 5 Years Integrated Law Courses - 2025-2026 (1).pdf" class="btn" style="margin-top: 15px;">Download PDF</a>
                     </div>
                     
                     <div class="pdf-card animate-pop">
@@ -653,7 +667,7 @@
                             <li>Separate applications needed for different courses in SOEL</li>
                             <li>Single application sufficient for Affiliated Colleges</li>
                         </ul>
-                        <a href="#" class="btn" style="margin-top: 15px;">Download PDF</a>
+                        <a href="Instructions for filling online Application Form for 5-year courses - English (1) (1).pdf" class="btn" style="margin-top: 15px;">Download PDF</a>
                     </div>
                 </div>
             </section>
@@ -716,93 +730,146 @@
         document.addEventListener('DOMContentLoaded', animateOnScroll);
         
         // Cutoff Chart
-        const ctx = document.getElementById('cutoffChart').getContext('2d');
-        const cutoffChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['OC', 'BC', 'BC(M)', 'MBC/DNC', 'SC', 'SC(A)', 'ST'],
-                datasets: [
-                    {
-                        label: '2022-2023 (B.A.LL.B. Hons.)',
-                        data: [98.000, 96.250, 94.500, 94.500, 93.750, 89.457, 85.250],
-                        backgroundColor: 'rgba(25, 36, 65, 0.7)',
-                        borderColor: 'rgba(25, 36, 65, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: '2023-2024 (First Cutoff)',
-                        data: [95.250, 90.000, 88.750, 90.000, 88.500, 87.500, 84.000],
-                        backgroundColor: 'rgba(230, 57, 70, 0.7)',
-                        borderColor: 'rgba(230, 57, 70, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: '2023-2024 (Second Cutoff)',
-                        data: [97.250, 92.750, 93.250, 94.500, 94.250, 95.000, 95.250],
-                        backgroundColor: 'rgba(65, 131, 215, 0.7)',
-                        borderColor: 'rgba(65, 131, 215, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: '2024-2025 (General)',
-                        data: [94.500, 87.510, 87.000, 87.625, null, 87.750, 80.250],
-                        backgroundColor: 'rgba(46, 204, 113, 0.7)',
-                        borderColor: 'rgba(46, 204, 113, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: '2024-2025 (7.5% Govt. School)',
-                        data: [96.500, 93.750, 93.875, 93.500, 94.125, 95.250, 92.750],
-                        backgroundColor: 'rgba(155, 89, 182, 0.7)',
-                        borderColor: 'rgba(155, 89, 182, 1)',
-                        borderWidth: 1
-                    }
-                ]
+      // Mobile-optimized Cutoff Chart
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('cutoffChart').getContext('2d');
+    
+    // Function to detect mobile
+    const isMobile = () => window.innerWidth < 768;
+    
+    const cutoffChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['OC', 'BC', 'BC(M)', 'MBC/DNC', 'SC', 'SC(A)', 'ST'],
+            datasets: [
+                {
+                    label: '2022-2023 (B.A.LL.B. Hons.)',
+                    data: [98.000, 96.250, 94.500, 94.500, 93.750, 89.457, 85.250],
+                    backgroundColor: 'rgba(25, 36, 65, 0.7)',
+                    borderColor: 'rgba(25, 36, 65, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: '2023-2024 (First Cutoff)',
+                    data: [95.250, 90.000, 88.750, 90.000, 88.500, 87.500, 84.000],
+                    backgroundColor: 'rgba(230, 57, 70, 0.7)',
+                    borderColor: 'rgba(230, 57, 70, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: '2023-2024 (Second Cutoff)',
+                    data: [97.250, 92.750, 93.250, 94.500, 94.250, 95.000, 95.250],
+                    backgroundColor: 'rgba(65, 131, 215, 0.7)',
+                    borderColor: 'rgba(65, 131, 215, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: '2024-2025 (General)',
+                    data: [94.500, 87.510, 87.000, 87.625, null, 87.750, 80.250],
+                    backgroundColor: 'rgba(46, 204, 113, 0.7)',
+                    borderColor: 'rgba(46, 204, 113, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: '2024-2025 (7.5% Govt. School)',
+                    data: [96.500, 93.750, 93.875, 93.500, 94.125, 95.250, 92.750],
+                    backgroundColor: 'rgba(155, 89, 182, 0.7)',
+                    borderColor: 'rgba(155, 89, 182, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 2000,
+                easing: 'easeOutQuart'
             },
-            options: {
-                responsive: true,
-                animation: {
-                    duration: 2000,
-                    easing: 'easeOutQuart'
-                },
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                        min: 75,
-                        max: 100,
-                        title: {
-                            display: true,
-                            text: 'Cutoff Marks (%)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Category'
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    min: 75,
+                    max: 100,
                     title: {
                         display: true,
-                        text: 'Law College Cutoff Marks by Category (2022-2025)',
+                        text: 'Cutoff Marks (%)',
                         font: {
-                            size: 16
+                            size: isMobile() ? 10 : 12
                         }
                     },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.dataset.label + ': ' + context.raw.toFixed(3) + '%';
-                            }
+                    ticks: {
+                        font: {
+                            size: isMobile() ? 8 : 10
+                        }
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Category',
+                        font: {
+                            size: isMobile() ? 10 : 12
+                        }
+                    },
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: isMobile() ? 45 : 0,
+                        minRotation: isMobile() ? 45 : 0,
+                        font: {
+                            size: isMobile() ? 8 : 10
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        boxWidth: 10,
+                        font: {
+                            size: isMobile() ? 8 : 10
+                        },
+                        padding: isMobile() ? 5 : 10
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Law College Cutoff Marks (2022-2025)',
+                    font: {
+                        size: isMobile() ? 12 : 14
+                    },
+                    padding: {
+                        top: 10,
+                        bottom: 20
+                    }
+                },
+                tooltip: {
+                    bodyFont: {
+                        size: isMobile() ? 10 : 12
+                    },
+                    titleFont: {
+                        size: isMobile() ? 10 : 12
+                    },
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.raw.toFixed(3) + '%';
                         }
                     }
                 }
             }
-        });
+        }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        cutoffChart.options.plugins.legend.labels.font.size = isMobile() ? 8 : 10;
+        cutoffChart.options.plugins.title.font.size = isMobile() ? 12 : 14;
+        cutoffChart.options.scales.x.ticks.font.size = isMobile() ? 8 : 10;
+        cutoffChart.options.scales.y.ticks.font.size = isMobile() ? 8 : 10;
+        cutoffChart.update();
+    });
+});
         
         // Smooth scrolling for navigation
         document.querySelectorAll('nav a').forEach(anchor => {
