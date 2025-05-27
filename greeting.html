@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mei Puratchi Volunteer Letter Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        /* Custom styles for PDF generation adjustments */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f0f0; /* Light background for visibility */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column; /* Arrange items vertically */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .input-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 800px; /* Match pdf-container width for better alignment */
+            box-sizing: border-box;
+        }
+
+        .input-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .input-container input[type="text"],
+        .input-container input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .input-container button {
+            background-color: #192441;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .input-container button:hover {
+            background-color: #2a3b61;
+        }
+
+        .pdf-container {
+            width: 210mm; /* A4 width */
+            min-height: 297mm; /* A4 height */
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20mm; /* Padding inside the A4 page */
+            box-sizing: border-box; /* Include padding in width/height */
+            display: flex;
+            flex-direction: column;
+            position: relative; /* For absolute positioning of header elements */
+            overflow: hidden; /* To contain the header curve */
+        }
+
+        /* Header background curve */
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 150px; /* Adjust height as needed */
+            background-color: #192441;
+            border-bottom-left-radius: 50% 20%; /* Top-left curve */
+            border-bottom-right-radius: 50% 20%; /* Top-right curve */
+            transform: scaleX(1.5); /* Stretch horizontally for a wider curve effect */
+            transform-origin: center top;
+            z-index: 0; /* Behind content */
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1; /* Above background */
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding-top: 1rem; /* Space from top edge */
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+            text-align: left;
+            padding-left: 1rem; /* Adjust as needed */
+            width: 60%; /* Occupy more space for the main title */
+        }
+
+        .logo-section img {
+            width: 50px; /* Adjust logo size */
+            height: auto;
+            margin-right: 10px;
+            border-radius: 0.375rem; /* rounded-md */
+        }
+
+        .whatsapp-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            color: #ffffff;
+            padding-right: 1rem; /* Adjust as needed */
+            width: 40%; /* Occupy less space */
+        }
+
+        .whatsapp-group img {
+            width: 80px; /* Adjust QR code size */
+            height: auto;
+            margin-top: 0.5rem;
+            border-radius: 0.375rem; /* rounded-md */
+        }
+
+        .thank-you-signature {
+            font-family: cursive; /* A more "handwritten" feel */
+            font-size: 3rem;
+            margin-top: 3rem;
+            text-align: right;
+            line-height: 1;
+            color: #333;
+        }
+
+        .footer {
+            margin-top: auto; /* Pushes footer to the bottom */
+            padding-top: 2rem;
+            border-top: 1px solid #eee;
+            color: #555;
+            font-size: 0.875rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer a {
+            color: #192441;
+            text-decoration: none;
+        }
+
+        /* Print specific styles */
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: #ffffff;
+            }
+            .pdf-container {
+                box-shadow: none;
+                margin: 0;
+                padding: 20mm;
+                width: 210mm;
+                min-height: 297mm;
+            }
+            /* Hide input container when printing */
+            .input-container {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="input-container">
+        <label for="userName">Enter Name:</label>
+        <input type="text" id="userName" placeholder="e.g., Abinaya.M" value="Abinaya.M">
+
+        <label for="currentDate">Enter Date:</label>
+        <input type="date" id="currentDate" value="2025-05-27">
+
+        <button id="generatePdfBtn">Generate PDF</button>
+    </div>
+
+    <div class="pdf-container" id="pdfContent">
+        <div class="header-bg"></div>
+
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="mei_logo.png" alt="Mei Puratchi Logo" class="rounded-md">
+                <div>
+                    <p class="text-xs font-semibold">பெரிதினும் பெரிதுகேள் !</p>
+                    <h1 class="text-3xl font-bold mt-1">MEI PURATCHI</h1>
+                    <p class="text-sm mt-1">Illuminating the Path to Educational Success</p>
+                </div>
+            </div>
+            <div class="whatsapp-group text-right">
+                <p class="text-sm font-medium">Mei Puratchi</p>
+                <p class="text-xs">WhatsApp group</p>
+                <img src="qrcode.png" alt="WhatsApp QR Code" class="rounded-md">
+            </div>
+        </div>
+
+        <div class="relative z-10 text-gray-800 text-base leading-relaxed">
+            <p class="mt-8"><span id="displayDate">Date : 27.05.2025</span></p>
+            <p class="font-semibold text-lg mt-2">Dear , <span id="displayName">Abinaya.M</span></p>
+            <p class="font-bold text-xl mt-4">Welcome to the Mei Puratchi team</p>
+
+            <p class="mt-6">
+                We are truly excited to have you join us as a volunteer. Your time, skills,
+                and dedication are invaluable to our mission of providing education and
+                career guidance to school students in Tamil Nadu, helping them utilize
+                this priceless stage of their lives to build a brighter future.
+            </p>
+
+            <p class="mt-4">
+                As a volunteer, you play a vital role in empowering young minds. Whether
+                you're mentoring, organizing sessions, or simply being a positive
+                influence, your contribution helps shape the aspirations and confidence
+                of students who are seeking direction and opportunity.
+            </p>
+
+            <p class="mt-4">
+                Thank you once again for choosing to make a difference. Together, we can
+                inspire and uplift the next generation.
+            </p>
+
+            <div class="thank-you-signature">
+                Thank<br>you
+            </div>
+        </div>
+
+        <div class="footer relative z-10">
+            <div class="flex items-center">
+                <span class="mr-2">&#9742;</span> <span>+91 7200282924</span>
+            </div>
+            <div class="flex items-center">
+                <span class="mr-2">&#x1F4AC;</span> <span>Whatsapp : <a href="https://chat.whatsapp.com/Fw3a4hxJnCB4aqVcOxUkK6" target="_blank">https://chat.whatsapp.com/Fw3a4hxJnCB4aqVcOxUkK6</a></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.jsPDF = window.jspdf.jsPDF; // Assign jsPDF to window object
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const userNameInput = document.getElementById('userName');
+            const currentDateInput = document.getElementById('currentDate');
+            const generatePdfBtn = document.getElementById('generatePdfBtn');
+            const displayNameSpan = document.getElementById('displayName');
+            const displayDateSpan = document.getElementById('displayDate');
+            const pdfContent = document.getElementById('pdfContent');
+
+            // Function to format date as DD.MM.YYYY
+            const formatDate = (dateString) => {
+                const [year, month, day] = dateString.split('-');
+                return `${day}.${month}.${year}`;
+            };
+
+            // Initial update of name and date
+            displayNameSpan.textContent = userNameInput.value;
+            displayDateSpan.textContent = `Date : ${formatDate(currentDateInput.value)}`;
+
+            // Update name and date in the preview as user types/selects
+            userNameInput.addEventListener('input', () => {
+                displayNameSpan.textContent = userNameInput.value;
+            });
+
+            currentDateInput.addEventListener('input', () => {
+                displayDateSpan.textContent = `Date : ${formatDate(currentDateInput.value)}`;
+            });
+
+            generatePdfBtn.addEventListener('click', () => {
+                const name = userNameInput.value.trim();
+                const date = currentDateInput.value.trim();
+
+                if (!name || !date) {
+                    // Using a simple alert for demonstration; replace with a custom modal in production
+                    alert('Please enter both name and date to generate the PDF.');
+                    return;
+                }
+
+                // Update the content one last time before generating PDF
+                displayNameSpan.textContent = name;
+                displayDateSpan.textContent = `Date : ${formatDate(date)}`;
+
+                // Generate PDF
+                html2canvas(pdfContent, {
+                    scale: 2, // Increase scale for better resolution in PDF
+                    useCORS: true // Important for loading images from different origins
+                }).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png');
+                    const pdf = new window.jsPDF('p', 'mm', 'a4'); // 'p' for portrait, 'mm' for millimeters, 'a4' for A4 size
+                    const imgWidth = 210; // A4 width in mm
+                    const pageHeight = 297; // A4 height in mm
+                    const imgHeight = canvas.height * imgWidth / canvas.width;
+                    let heightLeft = imgHeight;
+                    let position = 0;
+
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+
+                    while (heightLeft >= 0) {
+                        position = heightLeft - imgHeight;
+                        pdf.addPage();
+                        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                        heightLeft -= pageHeight;
+                    }
+
+                    const fileName = `${name.replace(/[^a-zA-Z0-9]/g, '_')}_${date}.pdf`;
+                    pdf.save(fileName);
+                }).catch(error => {
+                    console.error("Error generating PDF:", error);
+                    // Using a simple alert for demonstration; replace with a custom modal
+                    alert('Failed to generate PDF. Please try again.');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
