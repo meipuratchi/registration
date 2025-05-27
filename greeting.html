@@ -13,11 +13,11 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f0f0; /* Light background for visibility */
+            background-color: #f0f0f0;
             margin: 0;
             padding: 20px;
             display: flex;
-            flex-direction: column; /* Arrange items vertically */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -30,7 +30,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
             width: 100%;
-            max-width: 800px; /* Match pdf-container width for better alignment */
+            max-width: 800px;
             box-sizing: border-box;
         }
 
@@ -68,16 +68,16 @@
         }
 
         .pdf-container {
-            width: 210mm; /* A4 width */
-            min-height: 297mm; /* A4 height */
+            width: 210mm;
+            min-height: 297mm;
             background-color: #ffffff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20mm; /* Padding inside the A4 page */
-            box-sizing: border-box; /* Include padding in width/height */
+            padding: 20mm;
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            position: relative; /* For absolute positioning of header elements */
-            overflow: hidden; /* To contain the header curve */
+            position: relative;
+            overflow: hidden;
         }
 
         /* Header background curve */
@@ -86,23 +86,23 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 150px; /* Adjust height as needed */
+            height: 150px;
             background-color: #192441;
-            border-bottom-left-radius: 50% 20%; /* Top-left curve */
-            border-bottom-right-radius: 50% 20%; /* Top-right curve */
-            transform: scaleX(1.5); /* Stretch horizontally for a wider curve effect */
+            border-bottom-left-radius: 50% 20%;
+            border-bottom-right-radius: 50% 20%;
+            transform: scaleX(1.5);
             transform-origin: center top;
-            z-index: 0; /* Behind content */
+            z-index: 0;
         }
 
         .header-content {
             position: relative;
-            z-index: 1; /* Above background */
+            z-index: 1;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 2rem;
-            padding-top: 1rem; /* Space from top edge */
+            margin-bottom: -10px;
+            padding-top: -0px;
         }
 
         .logo-section {
@@ -110,15 +110,15 @@
             align-items: center;
             color: #ffffff;
             text-align: left;
-            padding-left: 1rem; /* Adjust as needed */
-            width: 60%; /* Occupy more space for the main title */
+            padding-left: 1rem;
+            width: 60%;
         }
 
         .logo-section img {
-            width: 50px; /* Adjust logo size */
+            width: 50px;
             height: auto;
             margin-right: 10px;
-            border-radius: 0.375rem; /* rounded-md */
+            border-radius: 0.375rem;
         }
 
         .whatsapp-group {
@@ -126,19 +126,19 @@
             flex-direction: column;
             align-items: flex-end;
             color: #ffffff;
-            padding-right: 1rem; /* Adjust as needed */
-            width: 40%; /* Occupy less space */
+            padding-right: 1rem;
+            width: 40%;
         }
 
         .whatsapp-group img {
-            width: 80px; /* Adjust QR code size */
+            width: 80px;
             height: auto;
             margin-top: 0.5rem;
-            border-radius: 0.375rem; /* rounded-md */
+            border-radius: 0.375rem;
         }
 
         .thank-you-signature {
-            font-family: cursive; /* A more "handwritten" feel */
+            font-family: cursive;
             font-size: 3rem;
             margin-top: 3rem;
             text-align: right;
@@ -147,7 +147,7 @@
         }
 
         .footer {
-            margin-top: auto; /* Pushes footer to the bottom */
+            margin-top: auto;
             padding-top: 2rem;
             border-top: 1px solid #eee;
             color: #555;
@@ -202,8 +202,8 @@
                 <img src="mei_logo.png" alt="Mei Puratchi Logo" class="rounded-md">
                 <div>
                     <p class="text-xs font-semibold">பெரிதினும் பெரிதுகேள் !</p>
-                    <h1 class="text-3xl font-bold mt-1">MEI PURATCHI</h1>
-                    <p class="text-sm mt-1">Illuminating the Path to Educational Success</p>
+                    <h1 class="text-3xl font-bold mt-4">MEI PURATCHI</h1>
+                    <p class="text-sm mt-600" style="font-size: 7.4px;">Illuminating the Path to Educational Success</p>
                 </div>
             </div>
             <div class="whatsapp-group text-right">
@@ -253,7 +253,7 @@
     </div>
 
     <script>
-        window.jsPDF = window.jspdf.jsPDF; // Assign jsPDF to window object
+        window.jsPDF = window.jspdf.jsPDF;
 
         document.addEventListener('DOMContentLoaded', () => {
             const userNameInput = document.getElementById('userName');
@@ -287,7 +287,6 @@
                 const date = currentDateInput.value.trim();
 
                 if (!name || !date) {
-                    // Using a simple alert for demonstration; replace with a custom modal in production
                     alert('Please enter both name and date to generate the PDF.');
                     return;
                 }
@@ -296,34 +295,40 @@
                 displayNameSpan.textContent = name;
                 displayDateSpan.textContent = `Date : ${formatDate(date)}`;
 
-                // Generate PDF
+                // Generate PDF with improved settings
+                const pdf = new window.jsPDF('p', 'mm', 'a4');
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                
+                // Set a fixed height for the content to prevent extra pages
+                const originalHeight = pdfContent.style.height;
+                pdfContent.style.height = '297mm';
+                
                 html2canvas(pdfContent, {
-                    scale: 2, // Increase scale for better resolution in PDF
-                    useCORS: true // Important for loading images from different origins
+                    scale: 2,
+                    useCORS: true,
+                    scrollX: 0,
+                    scrollY: 0,
+                    windowWidth: pdfContent.scrollWidth,
+                    windowHeight: pdfContent.scrollHeight
                 }).then(canvas => {
                     const imgData = canvas.toDataURL('image/png');
-                    const pdf = new window.jsPDF('p', 'mm', 'a4'); // 'p' for portrait, 'mm' for millimeters, 'a4' for A4 size
-                    const imgWidth = 210; // A4 width in mm
-                    const pageHeight = 297; // A4 height in mm
-                    const imgHeight = canvas.height * imgWidth / canvas.width;
-                    let heightLeft = imgHeight;
-                    let position = 0;
-
-                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                    heightLeft -= pageHeight;
-
-                    while (heightLeft >= 0) {
-                        position = heightLeft - imgHeight;
-                        pdf.addPage();
-                        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                        heightLeft -= pageHeight;
-                    }
-
+                    // Calculate image dimensions to fit the PDF page
+                    const imgWidth = pdfWidth;
+                    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+                    
+                    // Add image to PDF
+                    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                    
+                    // Restore original height
+                    pdfContent.style.height = originalHeight;
+                    
                     const fileName = `${name.replace(/[^a-zA-Z0-9]/g, '_')}_${date}.pdf`;
                     pdf.save(fileName);
                 }).catch(error => {
                     console.error("Error generating PDF:", error);
-                    // Using a simple alert for demonstration; replace with a custom modal
+                    // Restore original height in case of error
+                    pdfContent.style.height = originalHeight;
                     alert('Failed to generate PDF. Please try again.');
                 });
             });
