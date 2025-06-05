@@ -47,6 +47,7 @@
         
         input[type="text"],
         input[type="url"],
+        input[type="tel"],
         textarea {
             width: 100%;
             padding: 8px;
@@ -89,6 +90,14 @@
         .button-group {
             margin-top: 15px;
         }
+        
+        .link-preview {
+            word-break: break-all;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -124,12 +133,17 @@
             <input type="text" id="step2_name">
         </div>
         <div class="input-group">
-            <label for="step2_link">Personal Link:</label>
-            <input type="url" id="step2_link" placeholder="https://example.com/user.html">
+            <label for="step2_baseurl">Base URL:</label>
+            <input type="url" id="step2_baseurl" placeholder="https://meipuratchi.github.io/PARAMEDICALDEGREE/yourpage.html">
+        </div>
+        <div class="input-group">
+            <label for="step2_phone">Phone Number (with country code):</label>
+            <input type="tel" id="step2_phone" placeholder="+911234567890">
         </div>
         <button onclick="generateStep2()">Generate Step 2 Content</button>
         
         <div id="step2_result" class="result-container">
+            <div class="link-preview" id="generated_link"></div>
             <textarea id="step2_content" rows="6" cols="60"></textarea>
             <div class="button-group">
                 <button onclick="copyContent('step2_content')">Copy Content</button>
@@ -177,13 +191,23 @@
         
         function generateStep2() {
             const name = document.getElementById('step2_name').value;
-            const link = document.getElementById('step2_link').value;
+            const baseUrl = document.getElementById('step2_baseurl').value;
+            const phone = document.getElementById('step2_phone').value;
             
-            if (!name || !link) {
+            if (!name || !baseUrl || !phone) {
                 alert("Please fill all fields for Step 2");
                 return;
             }
             
+            // Generate the dynamic link
+            const encodedName = encodeURIComponent(name.replace(/\s+/g, ''));
+            const encodedPhone = encodeURIComponent(phone);
+            const dynamicLink = `${baseUrl}?name=${encodedName}&phone=${encodedPhone}`;
+            
+            // Show the generated link
+            document.getElementById('generated_link').textContent = dynamicLink;
+            
+            // Generate the email content
             document.getElementById('step2_content').value = 
 `வணக்கம் !‌ ${name},
 
@@ -191,7 +215,7 @@
           
 - மெய்-புரட்சி அமைப்பு
 
-மின்-ஏடு : ${link}`;
+மின்-ஏடு : ${dynamicLink}`;
             
             document.getElementById('step2_result').style.display = 'block';
         }
