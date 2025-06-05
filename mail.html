@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Step-by-Step Mail Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        h1 {
+            color: #192441;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #192441;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: #192441;
+            margin-top: 0;
+        }
+        
+        .step-container {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 5px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #192441;
+        }
+        
+        input[type="text"],
+        input[type="url"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        textarea {
+            height: 150px;
+            resize: vertical;
+            margin-top: 10px;
+            font-family: inherit;
+        }
+        
+        button {
+            background-color: #192441;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 10px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2a3566;
+        }
+        
+        .result-container {
+            display: none;
+            margin-top: 20px;
+            border-top: 1px dashed #ddd;
+            padding-top: 15px;
+        }
+        
+        .button-group {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mail Generator (மெய் புரட்சி)</h1>
+    
+    <!-- Step 1 Generator -->
+    <div class="step-container">
+        <h2>Step 1: Registration Confirmation</h2>
+        <div class="input-group">
+            <label for="step1_name">Name:</label>
+            <input type="text" id="step1_name">
+        </div>
+        <div class="input-group">
+            <label for="step1_date">Date (DD.MM.YYYY):</label>
+            <input type="text" id="step1_date" placeholder="10.06.2025">
+        </div>
+        <button onclick="generateStep1()">Generate Step 1 Content</button>
+        
+        <div id="step1_result" class="result-container">
+            <textarea id="step1_content" rows="6" cols="60"></textarea>
+            <div class="button-group">
+                <button onclick="copyContent('step1_content')">Copy Content</button>
+                <button onclick="sendMail('step1_content', 'பதிவு உறுதிப்படுத்தல்')">Send via meipuratchi@gmail.com</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Step 2 Generator -->
+    <div class="step-container">
+        <h2>Step 2: Document Link</h2>
+        <div class="input-group">
+            <label for="step2_name">Name:</label>
+            <input type="text" id="step2_name">
+        </div>
+        <div class="input-group">
+            <label for="step2_link">Personal Link:</label>
+            <input type="url" id="step2_link" placeholder="https://example.com/user.html">
+        </div>
+        <button onclick="generateStep2()">Generate Step 2 Content</button>
+        
+        <div id="step2_result" class="result-container">
+            <textarea id="step2_content" rows="6" cols="60"></textarea>
+            <div class="button-group">
+                <button onclick="copyContent('step2_content')">Copy Content</button>
+                <button onclick="sendMail('step2_content', 'உங்கள் மின்-ஏடு தயார்')">Send via meipuratchi@gmail.com</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Step 3 Generator -->
+    <div class="step-container">
+        <h2>Step 3: Welcome Message</h2>
+        <div class="input-group">
+            <label for="step3_name">Name:</label>
+            <input type="text" id="step3_name">
+        </div>
+        <button onclick="generateStep3()">Generate Step 3 Content</button>
+        
+        <div id="step3_result" class="result-container">
+            <textarea id="step3_content" rows="6" cols="60"></textarea>
+            <div class="button-group">
+                <button onclick="copyContent('step3_content')">Copy Content</button>
+                <button onclick="sendMail('step3_content', 'வாழ்த்துக்கள்! உங்கள் பயணம் தொடங்கியுள்ளது')">Send via meipuratchi@gmail.com</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateStep1() {
+            const name = document.getElementById('step1_name').value;
+            const date = document.getElementById('step1_date').value;
+            
+            if (!name || !date) {
+                alert("Please fill all fields for Step 1");
+                return;
+            }
+            
+            document.getElementById('step1_content').value = 
+`தங்கள் பதிவிற்கு நன்றி ${name}. உங்கள் பதிவு ஏற்றுக்கொள்ளப்பட்டது.
+
+எங்களுடைய முதல் நிலை தகவல்களைப் பெற ${date} அன்று மெய் புரட்சி குழு உங்களை தொடர்பு கொள்வார்கள்.
+நன்றி !!`;
+            
+            document.getElementById('step1_result').style.display = 'block';
+        }
+        
+        function generateStep2() {
+            const name = document.getElementById('step2_name').value;
+            const link = document.getElementById('step2_link').value;
+            
+            if (!name || !link) {
+                alert("Please fill all fields for Step 2");
+                return;
+            }
+            
+            document.getElementById('step2_content').value = 
+`வணக்கம் !‌ ${name},
+
+இரண்டாம் நிலை நகர்வோடு தங்களை ஆற்றுப்படுத்த கீழ் காணும், தகவல் பொருந்திய உங்களுக்கான மின்ஏட்டினை பெற்று பயனடையுமாறு கேட்டுக்கொள்ள படுகிறது  
+          
+- மெய்-புரட்சி அமைப்பு
+
+மின்-ஏடு : ${link}`;
+            
+            document.getElementById('step2_result').style.display = 'block';
+        }
+        
+        function generateStep3() {
+            const name = document.getElementById('step3_name').value;
+            
+            if (!name) {
+                alert("Please fill name for Step 3");
+                return;
+            }
+            
+            document.getElementById('step3_content').value = 
+`வாழ்த்துக்கள் ${name} !
+
+உங்கள் பாதையைத் தொடங்கியதற்கு வாழ்த்துக்கள்! கல்லூரியில் சேர்ந்ததற்கு வாழ்த்துக்கள். எங்கள் குழுவுடன் உங்கள் பயணத்தை மதிப்பாய்வு செய்ய விரும்புகிறீர்களா? எந்த வீடியோ, படத்தையும் அனுப்பவும்.
+
+meipuratchi@gmail.com மூலம் மின்னஞ்சல் அனுப்பவும்.`;
+            
+            document.getElementById('step3_result').style.display = 'block';
+        }
+        
+        function copyContent(id) {
+            const textarea = document.getElementById(id);
+            textarea.select();
+            document.execCommand('copy');
+            alert("Content copied to clipboard!");
+        }
+        
+        function sendMail(id, subject) {
+            const body = encodeURIComponent(document.getElementById(id).value);
+            window.location.href = `mailto:meipuratchi@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+        }
+    </script>
+</body>
+</html>
